@@ -20,7 +20,7 @@ export async function POST(request: Request) {
 
     const FLASHBOTS_ENDPOINT = 'https://relay-sepolia.flashbots.net';
     const CHAIN_ID = 11155111;
-    const INFURA_URL = `https://sepolia.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_PROJECT_ID}`;
+    const INFURA_URL = `https://sepolia.infura.io/v3/${process.env.INFURA_PROJECT_ID}`;
 
     const provider = new JsonRpcProvider(INFURA_URL);
     const authSigner = Wallet.createRandom();

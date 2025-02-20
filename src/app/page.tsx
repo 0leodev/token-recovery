@@ -14,6 +14,7 @@ export default function Home() {
   const [amount, setAmount] = useState("10")
   const [status, setStatus] = useState("")
   const [gasFeeInEth, setGasFeeInEth] = useState("0")
+  const [ethPriceInUsd, setEthPriceInUsd] = useState("0")
   const [isLoading, setIsLoading] = useState(false)
   const [highlight, setHighlight] = useState(false)
   const prevGasFeeRef = useRef(gasFeeInEth)
@@ -26,7 +27,6 @@ export default function Home() {
         if (data.gasFeeInEth) {
           const originalGasFee = Number.parseFloat(data.gasFeeInEth)
           const reducedGasFee = originalGasFee * 1.7
-          // const reducedGasFee = originalGasFee
           const newGasFee = reducedGasFee.toFixed(8)
           if (newGasFee !== prevGasFeeRef.current) {
             setGasFeeInEth(newGasFee)
@@ -39,7 +39,20 @@ export default function Home() {
       }
     }
 
+    const fetchEthPrice = async () => {
+      try {
+        const response = await fetch("/api/eth-price")
+        const data = await response.json()
+        if (data.ethPriceInUsd) {
+          setEthPriceInUsd(data.ethPriceInUsd)
+        }
+      } catch (error) {
+        console.error("Error fetching ETH price:", error)
+      }
+    }
+
     fetchGasFee()
+    fetchEthPrice()
     const intervalId = setInterval(fetchGasFee, 10000)
     return () => clearInterval(intervalId)
   }, [])
@@ -106,6 +119,8 @@ export default function Home() {
       }
     }, 5000)
   }
+
+  const gasFeeInUsd = (Number(gasFeeInEth) * Number(ethPriceInUsd)).toFixed(2)
 
   return (
     <div className="min-h-screen p-3">
@@ -174,9 +189,9 @@ export default function Home() {
         <div className="mt-6">
           <h2 className="text-xl font-semibold mb-4">Estimated Gas Cost</h2>
           <p className={`text-2xl font-bold text-accent p-2 ${highlight ? "highlight-change" : ""}`}>{gasFeeInEth} ETH</p>
+          <p className="text-lg text-gray-400">≈ ${gasFeeInUsd} USD</p>
         </div>
       </div>
     </div>
   )
 }
-

@@ -3,7 +3,7 @@ import { ethers } from "ethers"
 
 export async function GET() {
   try {
-    const INFURA_URL = `https://sepolia.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_PROJECT_ID}`
+    const INFURA_URL = `https://sepolia.infura.io/v3/${process.env.INFURA_PROJECT_ID}`
     const provider = new ethers.JsonRpcProvider(INFURA_URL)
 
     // Fetch the current fee data (gas prices)
