@@ -25,8 +25,8 @@ export default function Home() {
         const data = await response.json()
         if (data.gasFeeInEth) {
           const originalGasFee = Number.parseFloat(data.gasFeeInEth)
-          // const reducedGasFee = originalGasFee * 0.78
-          const reducedGasFee = originalGasFee
+          const reducedGasFee = originalGasFee * 1.7
+          // const reducedGasFee = originalGasFee
           const newGasFee = reducedGasFee.toFixed(18)
           if (newGasFee !== prevGasFeeRef.current) {
             setGasFeeInEth(newGasFee)
