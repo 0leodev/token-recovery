@@ -27,7 +27,7 @@ export default function Home() {
           const originalGasFee = Number.parseFloat(data.gasFeeInEth)
           const reducedGasFee = originalGasFee * 1.7
           // const reducedGasFee = originalGasFee
-          const newGasFee = reducedGasFee.toFixed(18)
+          const newGasFee = reducedGasFee.toFixed(8)
           if (newGasFee !== prevGasFeeRef.current) {
             setGasFeeInEth(newGasFee)
             setHighlight(true)
