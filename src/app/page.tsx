@@ -220,6 +220,7 @@ export default function Home() {
       <div className="max-w-2xl mx-auto mt-2 bg-gray-800 p-6 rounded-xl">
         <h2 className="text-xl font-bold mb-4">Information</h2>
         <ul className="list-disc pl-5 space-y-3 text-gray-300">
+          <li>This service costs <span className="font-bold">10%</span> of the total tokens recovered.</li>
           <li>The <span className="font-bold">Sponsor Private Key</span> is the wallet that will pay the gas for the transaction. It is recommended to use a wallet created solely for this purpose and not a personal-use wallet.</li>
           <li>The <span className="font-bold">Compromised Private Key</span> is the wallet contaminated by sweeper bots that instantly withdraw ETH as soon as it is deposited.</li>
           <li>The <span className="font-bold">Token Contract Address</span> is the contract of the token you want to recover.</li>
