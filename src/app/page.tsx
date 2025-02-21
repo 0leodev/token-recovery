@@ -5,24 +5,23 @@ import { useState, useEffect, useRef } from "react"
 import { AlertCircle, CheckCircle } from "lucide-react"
 
 export default function Home() {
-  const [sponsorKey, setSponsorKey] = useState("831cb835439d3d49659af847f5f8d7062797560792e7d5bb31b2db201259f488")
-  const [compromisedKey, setCompromisedKey] = useState(
-    "300ede692d2bda26ef28b5aa7bea1bf30f737be180686346850adadd93a34337",
-  )
-  const [tokenAddress, setTokenAddress] = useState("0x1D70D57ccD2798323232B2dD027B3aBcA5C00091")
-  const [recipientAddress, setRecipientAddress] = useState("0xD64E6bcD19741ac71BEAd4b0183185035b1776C1")
-  const [amount, setAmount] = useState("10")
+  const [sponsorKey, setSponsorKey] = useState("")
+  const [compromisedKey, setCompromisedKey] = useState("")
+  const [tokenAddress, setTokenAddress] = useState("")
+  const [recipientAddress, setRecipientAddress] = useState("")
+  const [amount, setAmount] = useState("")
   const [status, setStatus] = useState("")
   const [gasFeeInEth, setGasFeeInEth] = useState("0")
   const [ethPriceInUsd, setEthPriceInUsd] = useState("0")
   const [isLoading, setIsLoading] = useState(false)
   const [highlight, setHighlight] = useState(false)
+  const [network, setNetwork] = useState("mainnet") // Default to Ethereum Mainnet
   const prevGasFeeRef = useRef(gasFeeInEth)
 
   useEffect(() => {
     const fetchGasFee = async () => {
       try {
-        const response = await fetch("/api/gas-fee")
+        const response = await fetch(`/api/gas-fee?network=${network}`)
         const data = await response.json()
         if (data.gasFeeInEth) {
           const originalGasFee = Number.parseFloat(data.gasFeeInEth)
@@ -55,7 +54,7 @@ export default function Home() {
     fetchEthPrice()
     const intervalId = setInterval(fetchGasFee, 10000)
     return () => clearInterval(intervalId)
-  }, [])
+  }, [network])
 
   useEffect(() => {
     if (highlight) {
@@ -95,6 +94,7 @@ export default function Home() {
           tokenAddress,
           recipientAddress,
           amount,
+          network,
         }),
       })
 
@@ -123,10 +123,21 @@ export default function Home() {
   const gasFeeInUsd = (Number(gasFeeInEth) * Number(ethPriceInUsd)).toFixed(2)
 
   return (
-    <div className="min-h-screen p-3">
+    <div className="min-h-screen p-2">
       <div className="max-w-2xl mx-auto bg-secondary p-8 rounded-xl shadow-lg">
         <h1 className="text-3xl font-bold mb-6 text-center text-accent">Token Recovery</h1>
         <form onSubmit={handleSubmit} className="space-y-6">
+          <div>
+            <label className="block mb-2 font-semibold">Network:</label>
+            <select
+              value={network}
+              onChange={(e) => setNetwork(e.target.value)}
+              className="w-full bg-gray-800 text-foreground border border-gray-600 rounded-md p-2"
+            >
+              <option value="mainnet">Ethereum Mainnet</option>
+              <option value="sepolia">Sepolia Testnet</option>
+            </select>
+          </div>
           <div>
             <label className="block mb-2 font-semibold">Sponsor Private Key:</label>
             <input

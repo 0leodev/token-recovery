@@ -1,9 +1,15 @@
 import { NextResponse } from "next/server"
 import { ethers } from "ethers"
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
-    const INFURA_URL = `https://sepolia.infura.io/v3/${process.env.INFURA_PROJECT_ID}`
+    const { searchParams } = new URL(request.url)
+    const network = searchParams.get('network') || 'mainnet'
+
+    const INFURA_URL = network === 'mainnet' 
+      ? `https://mainnet.infura.io/v3/${process.env.INFURA_PROJECT_ID}` 
+      : `https://sepolia.infura.io/v3/${process.env.INFURA_PROJECT_ID}`
+
     const provider = new ethers.JsonRpcProvider(INFURA_URL)
 
     // Fetch the current fee data (gas prices)
@@ -22,4 +28,3 @@ export async function GET() {
     return NextResponse.json({ error: "Failed to calculate gas fee" }, { status: 500 })
   }
 }
-

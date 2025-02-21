@@ -39,18 +39,3 @@ button:hover {
   background-color: #3182ce;
 }
 
-@keyframes highlight {
-  0% {
-    border-radius: 10px;
-    background-color: rgba(255, 255, 255, 0.2);
-  }
-  100% {
-    border-radius: 10px;
-    background-color: transparent;
-  }
-}
-
-.highlight-change {
-  animation: highlight 1s ease-out;
-}
-

