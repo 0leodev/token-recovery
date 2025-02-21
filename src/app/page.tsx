@@ -124,8 +124,8 @@ export default function Home() {
 
   return (
     <div className="min-h-screen p-2 bg-gray-900">
-
-<div className="max-w-2xl mx-auto mb-2 p-6 bg-gradient-to-b from-yellow-950/20 to-yellow-900/10 text-yellow-100 rounded-xl border border-yellow-600/30 backdrop-blur-sm">
+      <h1 className="text-3xl font-bold mb-4 mt-3 text-center text-accent">Token Recovery</h1>
+    <div className="max-w-2xl mx-auto mb-2 p-6 bg-gradient-to-b from-yellow-950/20 to-yellow-900/10 text-yellow-100 rounded-xl border border-yellow-600/30 backdrop-blur-sm">
       <div className="flex items-start gap-4">
         <AlertTriangle className="w-6 h-6 text-yellow-500 shrink-0 mt-1" />
         <div className="space-y-3">
@@ -139,7 +139,6 @@ export default function Home() {
     </div>
 
       <div className="max-w-2xl mx-auto bg-gray-800 p-4 rounded-xl shadow-lg">
-        <h1 className="text-3xl font-bold mb-6 text-center text-accent">Token Recovery</h1>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label className="block mb-2 font-semibold">Network:</label>
