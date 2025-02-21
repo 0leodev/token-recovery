@@ -2,7 +2,7 @@
 
 import type React from "react"
 import { useState, useEffect, useRef } from "react"
-import { AlertCircle, CheckCircle } from "lucide-react"
+import { AlertCircle, CheckCircle, AlertTriangle } from "lucide-react"
 
 export default function Home() {
   const [sponsorKey, setSponsorKey] = useState("")
@@ -11,8 +11,8 @@ export default function Home() {
   const [recipientAddress, setRecipientAddress] = useState("")
   const [amount, setAmount] = useState("")
   const [status, setStatus] = useState("")
-  const [gasFeeInEth, setGasFeeInEth] = useState("0")
-  const [ethPriceInUsd, setEthPriceInUsd] = useState("0")
+  const [gasFeeInEth, setGasFeeInEth] = useState("")
+  const [ethPriceInUsd, setEthPriceInUsd] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const [highlight, setHighlight] = useState(false)
   const [network, setNetwork] = useState("mainnet") // Default to Ethereum Mainnet
@@ -123,8 +123,22 @@ export default function Home() {
   const gasFeeInUsd = (Number(gasFeeInEth) * Number(ethPriceInUsd)).toFixed(2)
 
   return (
-    <div className="min-h-screen p-2">
-      <div className="max-w-2xl mx-auto bg-secondary p-8 rounded-xl shadow-lg">
+    <div className="min-h-screen p-2 bg-gray-900">
+
+<div className="max-w-2xl mx-auto mb-2 p-6 bg-gradient-to-b from-yellow-950/20 to-yellow-900/10 text-yellow-100 rounded-xl border border-yellow-600/30 backdrop-blur-sm">
+      <div className="flex items-start gap-4">
+        <AlertTriangle className="w-6 h-6 text-yellow-500 shrink-0 mt-1" />
+        <div className="space-y-3">
+          <h2 className="text-lg font-semibold text-yellow-300">Caution</h2>
+          <p className="text-yellow-100/90 leading-relaxed">
+          It is advisable to run this application on a device that does not contain cryptocurrencies or sensitive
+          information, to prevent losses in a possible attack.
+          </p>
+        </div>
+      </div>
+    </div>
+
+      <div className="max-w-2xl mx-auto bg-gray-800 p-4 rounded-xl shadow-lg">
         <h1 className="text-3xl font-bold mb-6 text-center text-accent">Token Recovery</h1>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
@@ -202,6 +216,28 @@ export default function Home() {
           <p className={`text-2xl font-bold text-accent p-2 ${highlight ? "highlight-change" : ""}`}>{gasFeeInEth} ETH</p>
           <p className="text-lg text-gray-400">≈ ${gasFeeInUsd} USD</p>
         </div>
+      </div>
+      <div className="max-w-2xl mx-auto mt-2 bg-gray-800 p-6 rounded-xl">
+        <h2 className="text-xl font-bold mb-4">Information</h2>
+        <ul className="list-disc pl-5 space-y-3 text-gray-300">
+          <li>The <span className="font-bold">Sponsor Private Key</span> is the wallet that will pay the gas for the transaction. It is recommended to use a wallet created solely for this purpose and not a personal-use wallet.</li>
+          <li>The <span className="font-bold">Compromised Private Key</span> is the wallet contaminated by sweeper bots that instantly withdraw ETH as soon as it is deposited.</li>
+          <li>The <span className="font-bold">Token Contract Address</span> is the contract of the token you want to recover.</li>
+          <li>The <span className="font-bold">Recipient Address</span> is the wallet address where you want to receive the recovered tokens.</li>
+          <li>The <span className="font-bold">Amount to Transfer</span> is the amount of the token you want to recover. Make sure to transfer everything.</li>
+          <li>Make sure you have enough gas to pay for the transaction.</li>
+          <li>If you want, you can test the transaction on <span className="font-bold">Sepolia</span> to ensure it works.</li>
+        </ul>
+      </div>
+      <div className="max-w-2xl mx-auto mt-8 pb-8 text-center">
+        <a
+          href="https://x.com/0xleo_dev"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-gray-400 hover:text-gray-300 transition-colors text-sm"
+        >
+          Developed by @0xleo_dev
+        </a>
       </div>
     </div>
   )
