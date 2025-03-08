@@ -18,7 +18,7 @@ export async function GET(request: Request) {
     const maxPriorityFeePerGas = feeData.maxPriorityFeePerGas || ethers.parseUnits("1", "gwei") // Fallback if maxPriorityFeePerGas is null
 
     // Calculate the dynamic gas fee for the sponsor transaction
-    const gasLimit = 80000 // Gas limit for the transaction
+    const gasLimit = 100000 // Gas limit for the transaction
     const gasFee = BigInt(gasLimit) * (maxFeePerGas + maxPriorityFeePerGas) // Total gas fee in wei
     const gasFeeInEth = ethers.formatEther(gasFee) // Convert gas fee to ETH
 

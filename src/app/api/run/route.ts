@@ -57,7 +57,7 @@ export async function POST(request: Request) {
     const maxFeePerGas = feeData.maxFeePerGas || ethers.parseUnits('50', 'gwei'); 
     const maxPriorityFeePerGas = feeData.maxPriorityFeePerGas || ethers.parseUnits('1', 'gwei'); 
 
-    const gasLimit = 80000; 
+    const gasLimit = 100000; 
     const gasFee = BigInt(gasLimit) * maxFeePerGas;
     gasFeeInEth = ethers.formatEther(gasFee); 
 
