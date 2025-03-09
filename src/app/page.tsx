@@ -25,7 +25,7 @@ export default function Home() {
         const data = await response.json()
         if (data.gasFeeInEth) {
           const originalGasFee = Number.parseFloat(data.gasFeeInEth)
-          const increaseGasFee = originalGasFee * 1
+          const increaseGasFee = originalGasFee * 1.1
           const newGasFee = increaseGasFee.toFixed(8)
           if (newGasFee !== prevGasFeeRef.current) {
             setGasFeeInEth(newGasFee)
@@ -228,6 +228,7 @@ export default function Home() {
           <li>The <span className="font-bold">Amount to Transfer</span> is the amount of the token you want to recover. Make sure to transfer everything.</li>
           <li>Make sure you have enough gas to pay for the transaction.</li>
           <li>If you want, you can test the transaction on <span className="font-bold">Sepolia</span> to ensure it works.</li>
+          <li>Be patient, the transaction may take half an hour or more.</li>
         </ul>
       </div>
       <div className="max-w-2xl mx-auto mt-8 pb-8 text-center">
